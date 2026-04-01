@@ -1,0 +1,2970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NADIYA - Free Fire Top-Up Store</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff5722;
+            --primary-dark: #e64a19;
+            --secondary: #ffc107;
+            --accent: #00bcd4;
+            --mani-color: #2196f3;
+            --ezcash-color: #f44336;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --dark-bg: #0a0a0f;
+            --dark-card: #1a1a2e;
+            --dark-text: #ffffff;
+            --light-bg: #f5f5f5;
+            --light-card: #ffffff;
+            --light-text: #333333;
+            --gradient-1: linear-gradient(135deg, #ff5722, #ff9800);
+            --gradient-2: linear-gradient(135deg, #667eea, #764ba2);
+            --gradient-3: linear-gradient(135deg, #11998e, #38ef7d);
+            --gradient-fire: linear-gradient(135deg, #f12711, #f5af19);
+            --gradient-diamond: linear-gradient(135deg, #00c6fb, #005bea);
+            --glass: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            --dark-bg: #f0f2f5;
+            --dark-card: #ffffff;
+            --dark-text: #333333;
+            --glass: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 87, 34, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 188, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 193, 7, 0.1) 0%, transparent 40%);
+            animation: bgMove 20s ease-in-out infinite;
+        }
+
+        @keyframes bgMove {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(-5%, -5%); }
+            50% { transform: translate(-10%, 0); }
+            75% { transform: translate(-5%, 5%); }
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--gradient-fire);
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Login Screen */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 40px 30px;
+            background: var(--dark-card);
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--glass);
+            text-align: center;
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            background: var(--gradient-fire);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: white;
+            box-shadow: 0 10px 40px rgba(255, 87, 34, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .login-title {
+            font-size: 32px;
+            font-weight: 800;
+            background: var(--gradient-fire);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .login-subtitle {
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 15px 15px 15px 50px;
+            background: var(--glass);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            font-size: 16px;
+            color: var(--dark-text);
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 87, 34, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--gradient-fire);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 87, 34, 0.4);
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 87, 34, 0.6);
+        }
+
+        /* App Container */
+        .app-container {
+            display: none;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            background: var(--dark-card);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            border-bottom: 1px solid var(--glass);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-logo {
+            width: 45px;
+            height: 45px;
+            background: var(--gradient-fire);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        .header-title {
+            font-size: 22px;
+            font-weight: 700;
+            background: var(--gradient-fire);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle {
+            width: 45px;
+            height: 45px;
+            background: var(--glass);
+            border: none;
+            border-radius: 12px;
+            color: var(--dark-text);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            padding: 25px 20px;
+            background: var(--gradient-fire);
+            margin: 15px;
+            border-radius: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .welcome-subtitle {
+            font-size: 14px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .welcome-emoji {
+            font-size: 30px;
+            animation: wave 1s infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(20deg); }
+            75% { transform: rotate(-20deg); }
+        }
+
+        /* Wallet Cards */
+        .wallet-section {
+            padding: 0 15px;
+            margin-bottom: 20px;
+        }
+
+        .wallet-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .wallet-card {
+            padding: 20px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .wallet-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .wallet-card.mani {
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+            box-shadow: 0 10px 30px rgba(33, 150, 243, 0.3);
+        }
+
+        .wallet-card.ezcash {
+            background: linear-gradient(135deg, #f44336, #c62828);
+            box-shadow: 0 10px 30px rgba(244, 67, 54, 0.3);
+        }
+
+        .wallet-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-size: 18px;
+            color: white;
+        }
+
+        .wallet-name {
+            font-size: 12px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 5px;
+        }
+
+        .wallet-balance {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .wallet-currency {
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Step Indicator */
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-number {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-number {
+            background: var(--gradient-fire);
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 87, 34, 0.4);
+        }
+
+        .step.completed .step-number {
+            background: var(--success);
+            color: white;
+        }
+
+        .step-line {
+            width: 30px;
+            height: 3px;
+            background: var(--glass);
+            border-radius: 2px;
+        }
+
+        .step.completed + .step-line,
+        .step.active + .step-line {
+            background: var(--primary);
+        }
+
+        /* UID Section */
+        .uid-section {
+            padding: 0 15px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .uid-input-container {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px solid var(--glass);
+        }
+
+        .uid-input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        .uid-input {
+            flex: 1;
+            padding: 15px 20px;
+            background: var(--glass);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            font-size: 16px;
+            color: var(--dark-text);
+            transition: all 0.3s ease;
+        }
+
+        .uid-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .uid-verify-btn {
+            padding: 15px 25px;
+            background: var(--gradient-fire);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .uid-verify-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Packages Section */
+        .packages-section {
+            padding: 0 15px;
+            margin-bottom: 20px;
+        }
+
+        .package-tabs {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            scrollbar-width: none;
+        }
+
+        .package-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .package-tab {
+            padding: 12px 20px;
+            background: var(--glass);
+            border: none;
+            border-radius: 12px;
+            color: var(--dark-text);
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .package-tab.active {
+            background: var(--gradient-fire);
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 87, 34, 0.4);
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .package-card {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-fire);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .package-card.selected {
+            border-color: var(--primary);
+            background: rgba(255, 87, 34, 0.1);
+        }
+
+        .package-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 25px;
+            height: 25px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: white;
+        }
+
+        .package-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-diamond);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            font-size: 22px;
+            color: white;
+        }
+
+        .package-card.membership .package-icon {
+            background: var(--gradient-2);
+        }
+
+        .package-card.levelup .package-icon {
+            background: var(--gradient-3);
+        }
+
+        .package-card.evo .package-icon {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+
+        .package-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .package-amount {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        .package-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .package-price span {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Payment Section */
+        .payment-section {
+            padding: 0 15px;
+            margin-bottom: 20px;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .payment-method {
+            background: var(--dark-card);
+            border-radius: 15px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            transform: translateX(5px);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(255, 87, 34, 0.1);
+        }
+
+        .payment-method.mani {
+            border-left: 4px solid var(--mani-color);
+        }
+
+        .payment-method.ezcash {
+            border-left: 4px solid var(--ezcash-color);
+        }
+
+        .payment-method.whatsapp {
+            border-left: 4px solid #25d366;
+        }
+
+        .payment-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .payment-method.mani .payment-icon {
+            background: var(--mani-color);
+        }
+
+        .payment-method.ezcash .payment-icon {
+            background: var(--ezcash-color);
+        }
+
+        .payment-method.whatsapp .payment-icon {
+            background: #25d366;
+        }
+
+        .payment-info {
+            flex: 1;
+        }
+
+        .payment-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .payment-balance {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .payment-radio {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #888;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method.selected .payment-radio {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+
+        .payment-method.selected .payment-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        /* Order Button */
+        .order-section {
+            padding: 20px 15px;
+            position: fixed;
+            bottom: 70px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, var(--dark-bg), transparent);
+            z-index: 100;
+        }
+
+        .order-summary {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .order-summary.show {
+            display: block;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .summary-row.total {
+            font-size: 18px;
+            font-weight: 700;
+            padding-top: 10px;
+            border-top: 1px solid var(--glass);
+            color: var(--primary);
+        }
+
+        .order-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--gradient-fire);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 30px rgba(255, 87, 34, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .order-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px rgba(255, 87, 34, 0.6);
+        }
+
+        .order-btn:disabled {
+            background: #555;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--dark-card);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid var(--glass);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #888;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: rgba(255, 87, 34, 0.1);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* Screens */
+        .screen {
+            display: none;
+            padding: 20px 15px;
+            padding-bottom: 100px;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        /* Wallet Screen */
+        .wallet-detail-card {
+            background: var(--dark-card);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wallet-detail-card.mani {
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+        }
+
+        .wallet-detail-card.ezcash {
+            background: linear-gradient(135deg, #c62828, #b71c1c);
+        }
+
+        .wallet-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .wallet-detail-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: white;
+        }
+
+        .wallet-detail-balance {
+            text-align: right;
+        }
+
+        .wallet-detail-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .wallet-detail-amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .wallet-ref {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .wallet-ref-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 5px;
+        }
+
+        .wallet-ref-number {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .add-cash-form {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .add-cash-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .add-cash-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .add-cash-input input {
+            flex: 1;
+            padding: 15px;
+            background: var(--glass);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-size: 16px;
+            color: var(--dark-text);
+        }
+
+        .add-cash-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .add-cash-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--gradient-fire);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-cash-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Activity Section */
+        .activity-section {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .activity-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .activity-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--glass);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .activity-icon.credit {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+
+        .activity-icon.debit {
+            background: rgba(244, 67, 54, 0.2);
+            color: var(--danger);
+        }
+
+        .activity-info {
+            flex: 1;
+        }
+
+        .activity-type {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .activity-date {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .activity-amount {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .activity-amount.credit {
+            color: var(--success);
+        }
+
+        .activity-amount.debit {
+            color: var(--danger);
+        }
+
+        .no-activity {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+        }
+
+        /* Settings Screen */
+        .settings-list {
+            background: var(--dark-card);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .settings-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--glass);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .settings-item:hover {
+            background: var(--glass);
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .settings-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+        }
+
+        .settings-icon.blue {
+            background: var(--mani-color);
+        }
+
+        .settings-icon.red {
+            background: var(--ezcash-color);
+        }
+
+        .settings-icon.green {
+            background: var(--success);
+        }
+
+        .settings-icon.orange {
+            background: var(--warning);
+        }
+
+        .settings-icon.purple {
+            background: #9c27b0;
+        }
+
+        .settings-icon.cyan {
+            background: var(--accent);
+        }
+
+        .settings-info {
+            flex: 1;
+        }
+
+        .settings-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .settings-desc {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .settings-arrow {
+            color: #888;
+        }
+
+        .logout-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 18px;
+            background: linear-gradient(135deg, #f44336, #c62828);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(244, 67, 54, 0.4);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            width: 100%;
+            max-width: 400px;
+            background: var(--dark-card);
+            border-radius: 25px;
+            padding: 30px;
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            width: 35px;
+            height: 35px;
+            background: var(--glass);
+            border: none;
+            border-radius: 10px;
+            color: var(--dark-text);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.cancel {
+            background: var(--glass);
+            color: var(--dark-text);
+        }
+
+        .modal-btn.confirm {
+            background: var(--gradient-fire);
+            color: white;
+        }
+
+        /* History Screen */
+        .history-item {
+            background: var(--dark-card);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .history-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-diamond);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .history-info {
+            flex: 1;
+        }
+
+        .history-title {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .history-uid {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .history-right {
+            text-align: right;
+        }
+
+        .history-amount {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--primary);
+        }
+
+        .history-date {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .history-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .history-status.success {
+            background: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+
+        .history-status.pending {
+            background: rgba(255, 152, 0, 0.2);
+            color: var(--warning);
+        }
+
+        /* Manual Screen */
+        .manual-step {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .manual-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-fire);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .manual-content h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .manual-content p {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        /* Language Modal */
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--glass);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-option:hover {
+            background: rgba(255, 87, 34, 0.1);
+        }
+
+        .language-option.selected {
+            background: rgba(255, 87, 34, 0.2);
+            border: 2px solid var(--primary);
+        }
+
+        .language-flag {
+            font-size: 30px;
+        }
+
+        .language-name {
+            font-weight: 600;
+        }
+
+        /* Wallet Tabs */
+        .wallet-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .wallet-tab {
+            flex: 1;
+            padding: 15px;
+            background: var(--glass);
+            border: none;
+            border-radius: 12px;
+            color: var(--dark-text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .wallet-tab.active {
+            background: var(--gradient-fire);
+            color: white;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--dark-card);
+            padding: 15px 25px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            z-index: 10001;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .toast i {
+            font-size: 20px;
+        }
+
+        .toast.success i {
+            color: var(--success);
+        }
+
+        .toast.error i {
+            color: var(--danger);
+        }
+
+        /* Account Details */
+        .account-card {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .account-avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-fire);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
+
+        .account-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .account-phone {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .account-info {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .account-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--glass);
+        }
+
+        .account-row:last-child {
+            border-bottom: none;
+        }
+
+        .account-label {
+            color: #888;
+        }
+
+        .account-value {
+            font-weight: 600;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 360px) {
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .wallet-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation"></div>
+    <div class="floating-particles" id="particles"></div>
+
+    <!-- Login Screen -->
+    <div class="login-screen" id="loginScreen">
+        <div class="login-container">
+            <div class="login-logo">
+                <i class="fas fa-fire"></i>
+            </div>
+            <h1 class="login-title">NADIYA</h1>
+            <p class="login-subtitle">Free Fire Top-Up Store</p>
+            
+            <div class="input-group">
+                <label>Username</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="loginUsername" placeholder="Enter your username">
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label>Mobile Number</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" id="loginMobile" placeholder="Enter mobile number">
+                </div>
+            </div>
+            
+            <button class="login-btn" onclick="login()">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+        </div>
+    </div>
+
+    <!-- App Container -->
+    <div class="app-container" id="appContainer">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="header-logo">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <span class="header-title">NADIYA</span>
+            </div>
+            <div class="header-right">
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Home Screen -->
+        <div class="screen active" id="homeScreen">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <div class="welcome-content">
+                    <div class="welcome-text">
+                        <span id="welcomeUser">Welcome, User!</span>
+                        <span class="welcome-emoji">👋</span>
+                    </div>
+                    <p class="welcome-subtitle" data-lang="welcome_subtitle">Choose your package & top-up instantly</p>
+                </div>
+            </div>
+
+            <!-- Wallet Cards -->
+            <div class="wallet-section">
+                <div class="wallet-cards">
+                    <div class="wallet-card mani" onclick="showWalletScreen('mani')">
+                        <div class="wallet-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="wallet-name">Mani Account</div>
+                        <div class="wallet-balance" id="maniBalance">Rs. 0</div>
+                        <div class="wallet-currency">LKR</div>
+                    </div>
+                    <div class="wallet-card ezcash" onclick="showWalletScreen('ezcash')">
+                        <div class="wallet-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="wallet-name">EZ Cash</div>
+                        <div class="wallet-balance" id="ezcashBalance">Rs. 0</div>
+                        <div class="wallet-currency">LKR</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step active" id="step1">
+                    <div class="step-number">1</div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" id="step2">
+                    <div class="step-number">2</div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" id="step3">
+                    <div class="step-number">3</div>
+                </div>
+            </div>
+
+            <!-- UID Section -->
+            <div class="uid-section">
+                <h3 class="section-title">
+                    <i class="fas fa-id-card"></i>
+                    <span data-lang="enter_uid">Enter Your UID</span>
+                </h3>
+                <div class="uid-input-container">
+                    <div class="uid-input-wrapper">
+                        <input type="text" class="uid-input" id="uidInput" placeholder="Enter Free Fire UID" oninput="validateUID()">
+                        <button class="uid-verify-btn" onclick="verifyUID()">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Packages Section -->
+            <div class="packages-section">
+                <h3 class="section-title">
+                    <i class="fas fa-gem"></i>
+                    <span data-lang="packages">Available Packages</span>
+                </h3>
+                
+                <!-- Package Tabs -->
+                <div class="package-tabs">
+                    <button class="package-tab active" onclick="showPackageCategory('diamonds')">
+                        <i class="fas fa-gem"></i> Diamonds
+                    </button>
+                    <button class="package-tab" onclick="showPackageCategory('membership')">
+                        <i class="fas fa-crown"></i> Membership
+                    </button>
+                    <button class="package-tab" onclick="showPackageCategory('levelup')">
+                        <i class="fas fa-level-up-alt"></i> Level Up
+                    </button>
+                    <button class="package-tab" onclick="showPackageCategory('evo')">
+                        <i class="fas fa-star"></i> EVO Access
+                    </button>
+                </div>
+
+                <!-- Diamonds Packages -->
+                <div class="packages-grid" id="diamondsPackages">
+                    <div class="package-card" onclick="selectPackage(this, '25 Diamonds', 100)">
+                        <div class="package-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="package-name">25 Diamonds</div>
+                        <div class="package-amount">💎 25</div>
+                        <div class="package-price">Rs. 100</div>
+                    </div>
+                    <div class="package-card" onclick="selectPackage(this, '100 Diamonds', 350)">
+                        <div class="package-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="package-name">100 Diamonds</div>
+                        <div class="package-amount">💎 100</div>
+                        <div class="package-price">Rs. 350</div>
+                    </div>
+                    <div class="package-card" onclick="selectPackage(this, '310 Diamonds', 1000)">
+                        <div class="package-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="package-name">310 Diamonds</div>
+                        <div class="package-amount">💎 310</div>
+                        <div class="package-price">Rs. 1,000</div>
+                    </div>
+                    <div class="package-card" onclick="selectPackage(this, '520 Diamonds', 1700)">
+                        <div class="package-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="package-name">520 Diamonds</div>
+                        <div class="package-amount">💎 520</div>
+                        <div class="package-price">Rs. 1,700</div>
+                    </div>
+                    <div class="package-card" onclick="selectPackage(this, '1060 Diamonds', 3400)">
+                        <div class="package-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="package-name">1060 Diamonds</div>
+                        <div class="package-amount">💎 1060</div>
+                        <div class="package-price">Rs. 3,400</div>
+                    </div>
+                    <div class="package-card" onclick="selectPackage(this, '2180 Diamonds', 7000)">
+                        <div class="package-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="package-name">2180 Diamonds</div>
+                        <div class="package-amount">💎 2180</div>
+                        <div class="package-price">Rs. 7,000</div>
+                    </div>
+                    <div class="package-card" onclick="selectPackage(this, '5600 Diamonds', 17000)">
+                        <div class="package-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="package-name">5600 Diamonds</div>
+                        <div class="package-amount">💎 5600</div>
+                        <div class="package-price">Rs. 17,000</div>
+                    </div>
+                    <div class="package-card" onclick="selectPackage(this, '11500 Diamonds', 31000)">
+                        <div class="package-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <div class="package-name">11500 Diamonds</div>
+                        <div class="package-amount">💎 11500</div>
+                        <div class="package-price">Rs. 31,000</div>
+                    </div>
+                </div>
+
+                <!-- Membership Packages -->
+                <div class="packages-grid" id="membershipPackages" style="display: none;">
+                    <div class="package-card membership" onclick="selectPackage(this, 'Weekly Lite', 150)">
+                        <div class="package-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="package-name">Weekly Lite</div>
+                        <div class="package-amount">👑 7 Days</div>
+                        <div class="package-price">Rs. 150</div>
+                    </div>
+                    <div class="package-card membership" onclick="selectPackage(this, 'Weekly', 690)">
+                        <div class="package-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="package-name">Weekly</div>
+                        <div class="package-amount">👑 7 Days</div>
+                        <div class="package-price">Rs. 690</div>
+                    </div>
+                    <div class="package-card membership" onclick="selectPackage(this, 'Monthly', 3500)">
+                        <div class="package-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="package-name">Monthly</div>
+                        <div class="package-amount">👑 30 Days</div>
+                        <div class="package-price">Rs. 3,500</div>
+                    </div>
+                </div>
+
+                <!-- Level Up Packages -->
+                <div class="packages-grid" id="levelupPackages" style="display: none;">
+                    <div class="package-card levelup" onclick="selectPackage(this, 'Level 6 Pass', 160)">
+                        <div class="package-icon">
+                            <i class="fas fa-level-up-alt"></i>
+                        </div>
+                        <div class="package-name">Level 6</div>
+                        <div class="package-amount">⬆️ Pass</div>
+                        <div class="package-price">Rs. 160</div>
+                    </div>
+                    <div class="package-card levelup" onclick="selectPackage(this, 'Level 10 Pass', 270)">
+                        <div class="package-icon">
+                            <i class="fas fa-level-up-alt"></i>
+                        </div>
+                        <div class="package-name">Level 10</div>
+                        <div class="package-amount">⬆️ Pass</div>
+                        <div class="package-price">Rs. 270</div>
+                    </div>
+                    <div class="package-card levelup" onclick="selectPackage(this, 'Level 15 Pass', 270)">
+                        <div class="package-icon">
+                            <i class="fas fa-level-up-alt"></i>
+                        </div>
+                        <div class="package-name">Level 15</div>
+                        <div class="package-amount">⬆️ Pass</div>
+                        <div class="package-price">Rs. 270</div>
+                    </div>
+                    <div class="package-card levelup" onclick="selectPackage(this, 'Level 20 Pass', 270)">
+                        <div class="package-icon">
+                            <i class="fas fa-level-up-alt"></i>
+                        </div>
+                        <div class="package-name">Level 20</div>
+                        <div class="package-amount">⬆️ Pass</div>
+                        <div class="package-price">Rs. 270</div>
+                    </div>
+                    <div class="package-card levelup" onclick="selectPackage(this, 'Level 25 Pass', 270)">
+                        <div class="package-icon">
+                            <i class="fas fa-level-up-alt"></i>
+                        </div>
+                        <div class="package-name">Level 25</div>
+                        <div class="package-amount">⬆️ Pass</div>
+                        <div class="package-price">Rs. 270</div>
+                    </div>
+                    <div class="package-card levelup" onclick="selectPackage(this, 'Level 30 Pass', 370)">
+                        <div class="package-icon">
+                            <i class="fas fa-level-up-alt"></i>
+                        </div>
+                        <div class="package-name">Level 30</div>
+                        <div class="package-amount">⬆️ Pass</div>
+                        <div class="package-price">Rs. 370</div>
+                    </div>
+                </div>
+
+                <!-- EVO Packages -->
+                <div class="packages-grid" id="evoPackages" style="display: none;">
+                    <div class="package-card evo" onclick="selectPackage(this, 'EVO 3D', 220)">
+                        <div class="package-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="package-name">EVO 3D</div>
+                        <div class="package-amount">⭐ 3 Days</div>
+                        <div class="package-price">Rs. 220</div>
+                    </div>
+                    <div class="package-card evo" onclick="selectPackage(this, 'EVO 7D', 320)">
+                        <div class="package-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="package-name">EVO 7D</div>
+                        <div class="package-amount">⭐ 7 Days</div>
+                        <div class="package-price">Rs. 320</div>
+                    </div>
+                    <div class="package-card evo" onclick="selectPackage(this, 'EVO 30D', 950)">
+                        <div class="package-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="package-name">EVO 30D</div>
+                        <div class="package-amount">⭐ 30 Days</div>
+                        <div class="package-price">Rs. 950</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Section -->
+            <div class="payment-section">
+                <h3 class="section-title">
+                    <i class="fas fa-credit-card"></i>
+                    <span data-lang="payment_method">Payment Method</span>
+                </h3>
+                <div class="payment-methods">
+                    <div class="payment-method ezcash" onclick="selectPayment(this, 'ezcash')">
+                        <div class="payment-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="payment-info">
+                            <div class="payment-name">EZ Cash</div>
+                            <div class="payment-balance">Balance: Rs. <span id="ezcashPayBalance">0</span></div>
+                        </div>
+                        <div class="payment-radio"></div>
+                    </div>
+                    <div class="payment-method mani" onclick="selectPayment(this, 'mani')">
+                        <div class="payment-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="payment-info">
+                            <div class="payment-name">Mani Account</div>
+                            <div class="payment-balance">Balance: Rs. <span id="maniPayBalance">0</span></div>
+                        </div>
+                        <div class="payment-radio"></div>
+                    </div>
+                    <div class="payment-method whatsapp" onclick="selectPayment(this, 'whatsapp')">
+                        <div class="payment-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="payment-info">
+                            <div class="payment-name">WhatsApp Order</div>
+                            <div class="payment-balance">Send order via WhatsApp</div>
+                        </div>
+                        <div class="payment-radio"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Section -->
+            <div class="order-section">
+                <div class="order-summary" id="orderSummary">
+                    <div class="summary-row">
+                        <span>UID:</span>
+                        <span id="summaryUID">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Package:</span>
+                        <span id="summaryPackage">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Payment:</span>
+                        <span id="summaryPayment">-</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="summaryTotal">Rs. 0</span>
+                    </div>
+                </div>
+                <button class="order-btn" id="orderBtn" onclick="processOrder()" disabled>
+                    <i class="fas fa-shopping-cart"></i>
+                    <span data-lang="place_order">Place Order</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Wallet Screen -->
+        <div class="screen" id="walletScreen">
+            <div class="wallet-tabs">
+                <button class="wallet-tab active" onclick="switchWalletTab('mani')">Mani Account</button>
+                <button class="wallet-tab" onclick="switchWalletTab('ezcash')">EZ Cash</button>
+            </div>
+
+            <!-- Mani Wallet -->
+            <div id="maniWallet">
+                <div class="wallet-detail-card mani">
+                    <div class="wallet-detail-header">
+                        <div class="wallet-detail-icon">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="wallet-detail-balance">
+                            <div class="wallet-detail-label">Available Balance</div>
+                            <div class="wallet-detail-amount" id="maniDetailBalance">Rs. 0</div>
+                        </div>
+                    </div>
+                    <div class="wallet-ref">
+                        <div class="wallet-ref-label">Reference Number</div>
+                        <div class="wallet-ref-number">
+                            <span>NADIYA2026884968</span>
+                            <button class="copy-btn" onclick="copyRef('NADIYA2026884968')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="add-cash-form">
+                    <div class="add-cash-title">
+                        <i class="fas fa-plus-circle"></i>
+                        Add Cash to Wallet
+                    </div>
+                    <p style="font-size: 12px; color: #888; margin-bottom: 15px;">
+                        ref number එක ගහලා ඕන ගානක් ගහලා ඕන වෙලාවක topup කරගන්න පුළුවන්
+                    </p>
+                    <div class="add-cash-input">
+                        <input type="text" id="maniRefInput" placeholder="Enter Reference Number">
+                    </div>
+                    <div class="add-cash-input">
+                        <input type="number" id="maniAmountInput" placeholder="Enter Amount (Rs.)">
+                    </div>
+                    <button class="add-cash-btn" onclick="addCash('mani')">
+                        <i class="fas fa-plus"></i> Add Cash
+                    </button>
+                </div>
+
+                <div class="activity-section">
+                    <div class="activity-title">Wallet Activity</div>
+                    <div class="activity-list" id="maniActivity">
+                        <div class="no-activity">
+                            <i class="fas fa-history" style="font-size: 40px; color: #555; margin-bottom: 10px;"></i>
+                            <p>No activity yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EZ Cash Wallet -->
+            <div id="ezcashWallet" style="display: none;">
+                <div class="wallet-detail-card ezcash">
+                    <div class="wallet-detail-header">
+                        <div class="wallet-detail-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="wallet-detail-balance">
+                            <div class="wallet-detail-label">Available Balance</div>
+                            <div class="wallet-detail-amount" id="ezcashDetailBalance">Rs. 0</div>
+                        </div>
+                    </div>
+                    <div class="wallet-ref">
+                        <div class="wallet-ref-label">Reference Number</div>
+                        <div class="wallet-ref-number">
+                            <span>NADIYA202688499</span>
+                            <button class="copy-btn" onclick="copyRef('NADIYA202688499')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="add-cash-form">
+                    <div class="add-cash-title">
+                        <i class="fas fa-plus-circle"></i>
+                        Add Cash to Wallet
+                    </div>
+                    <p style="font-size: 12px; color: #888; margin-bottom: 15px;">
+                        ref number එක ගහලා ඕන ගානක් ගහලා ඕන වෙලාවක topup කරගන්න පුළුවන්
+                    </p>
+                    <div class="add-cash-input">
+                        <input type="text" id="ezcashRefInput" placeholder="Enter Reference Number">
+                    </div>
+                    <div class="add-cash-input">
+                        <input type="number" id="ezcashAmountInput" placeholder="Enter Amount (Rs.)">
+                    </div>
+                    <button class="add-cash-btn" onclick="addCash('ezcash')">
+                        <i class="fas fa-plus"></i> Add Cash
+                    </button>
+                </div>
+
+                <div class="activity-section">
+                    <div class="activity-title">Wallet Activity</div>
+                    <div class="activity-list" id="ezcashActivity">
+                        <div class="no-activity">
+                            <i class="fas fa-history" style="font-size: 40px; color: #555; margin-bottom: 10px;"></i>
+                            <p>No activity yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Screen -->
+        <div class="screen" id="settingsScreen">
+            <h2 style="margin-bottom: 20px;">Settings</h2>
+            
+            <div class="settings-list">
+                <div class="settings-item" onclick="showSettingsPage('maniSettings')">
+                    <div class="settings-icon blue">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="settings-info">
+                        <div class="settings-name">Mani Account</div>
+                        <div class="settings-desc">Manage your Mani wallet</div>
+                    </div>
+                    <i class="fas fa-chevron-right settings-arrow"></i>
+                </div>
+                <div class="settings-item" onclick="showSettingsPage('ezcashSettings')">
+                    <div class="settings-icon red">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="settings-info">
+                        <div class="settings-name">EZ Cash</div>
+                        <div class="settings-desc">Manage your EZ Cash wallet</div>
+                    </div>
+                    <i class="fas fa-chevron-right settings-arrow"></i>
+                </div>
+                <div class="settings-item" onclick="showSettingsPage('history')">
+                    <div class="settings-icon green">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="settings-info">
+                        <div class="settings-name">Top-Up History</div>
+                        <div class="settings-desc">View your order history</div>
+                    </div>
+                    <i class="fas fa-chevron-right settings-arrow"></i>
+                </div>
+                <div class="settings-item" onclick="showSettingsPage('account')">
+                    <div class="settings-icon orange">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="settings-info">
+                        <div class="settings-name">Account Details</div>
+                        <div class="settings-desc">View your profile</div>
+                    </div>
+                    <i class="fas fa-chevron-right settings-arrow"></i>
+                </div>
+                <div class="settings-item" onclick="showSettingsPage('manual')">
+                    <div class="settings-icon purple">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="settings-info">
+                        <div class="settings-name">FF Manual</div>
+                        <div class="settings-desc">How to top-up guide</div>
+                    </div>
+                    <i class="fas fa-chevron-right settings-arrow"></i>
+                </div>
+                <div class="settings-item" onclick="showLanguageModal()">
+                    <div class="settings-icon cyan">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="settings-info">
+                        <div class="settings-name">Language</div>
+                        <div class="settings-desc" id="currentLang">English</div>
+                    </div>
+                    <i class="fas fa-chevron-right settings-arrow"></i>
+                </div>
+            </div>
+
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+
+        <!-- History Screen -->
+        <div class="screen" id="historyScreen">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                <button onclick="showScreen('settings')" style="background: var(--glass); border: none; width: 40px; height: 40px; border-radius: 10px; color: var(--dark-text); font-size: 18px; cursor: pointer;">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>Top-Up History</h2>
+            </div>
+            <div id="historyList">
+                <div class="no-activity" style="padding: 50px 20px;">
+                    <i class="fas fa-shopping-bag" style="font-size: 50px; color: #555; margin-bottom: 15px;"></i>
+                    <p>No orders yet</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Account Screen -->
+        <div class="screen" id="accountScreen">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                <button onclick="showScreen('settings')" style="background: var(--glass); border: none; width: 40px; height: 40px; border-radius: 10px; color: var(--dark-text); font-size: 18px; cursor: pointer;">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>Account Details</h2>
+            </div>
+            <div class="account-card">
+                <div class="account-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="account-name" id="accountName">User</div>
+                <div class="account-phone" id="accountPhone">+94 XX XXX XXXX</div>
+            </div>
+            <div class="account-info">
+                <div class="account-row">
+                    <span class="account-label">Mani Balance</span>
+                    <span class="account-value" id="accountMani">Rs. 0</span>
+                </div>
+                <div class="account-row">
+                    <span class="account-label">EZ Cash Balance</span>
+                    <span class="account-value" id="accountEzcash">Rs. 0</span>
+                </div>
+                <div class="account-row">
+                    <span class="account-label">Total Orders</span>
+                    <span class="account-value" id="accountOrders">0</span>
+                </div>
+                <div class="account-row">
+                    <span class="account-label">Member Since</span>
+                    <span class="account-value" id="accountJoined">-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manual Screen -->
+        <div class="screen" id="manualScreen">
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                <button onclick="showScreen('settings')" style="background: var(--glass); border: none; width: 40px; height: 40px; border-radius: 10px; color: var(--dark-text); font-size: 18px; cursor: pointer;">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2>FF Manual</h2>
+            </div>
+            <div class="manual-step">
+                <div class="manual-number">1</div>
+                <div class="manual-content">
+                    <h3>Enter UID</h3>
+                    <p>Enter your Free Fire User ID (UID). You can find it in your game profile.</p>
+                </div>
+            </div>
+            <div class="manual-step">
+                <div class="manual-number">2</div>
+                <div class="manual-content">
+                    <h3>Select Item</h3>
+                    <p>Choose your desired package - Diamonds, Membership, Level Up Pass, or EVO Access.</p>
+                </div>
+            </div>
+            <div class="manual-step">
+                <div class="manual-number">3</div>
+                <div class="manual-content">
+                    <h3>Payment Method</h3>
+                    <p>Select your payment method - EZ Cash, Mani Account, or WhatsApp Order.</p>
+                </div>
+            </div>
+            <div class="manual-step">
+                <div class="manual-number">4</div>
+                <div class="manual-content">
+                    <h3>Confirm Order</h3>
+                    <p>Review your order and click Place Order. You will receive confirmation via WhatsApp.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-item active" onclick="showScreen('home')">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item" onclick="showScreen('wallet')">
+                <i class="fas fa-wallet"></i>
+                <span>Wallet</span>
+            </div>
+            <div class="nav-item" onclick="showScreen('settings')">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Language Modal -->
+    <div class="modal-overlay" id="languageModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Select Language</h3>
+                <button class="modal-close" onclick="closeModal('languageModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="language-option" onclick="setLanguage('en')">
+                    <span class="language-flag">🇬🇧</span>
+                    <span class="language-name">English</span>
+                </div>
+                <div class="language-option" onclick="setLanguage('si')">
+                    <span class="language-flag">🇱🇰</span>
+                    <span class="language-name">සිංහල</span>
+                </div>
+                <div class="language-option" onclick="setLanguage('ta')">
+                    <span class="language-flag">🇱🇰</span>
+                    <span class="language-name">தமிழ்</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Order Modal -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirm Order</h3>
+                <button class="modal-close" onclick="closeModal('confirmModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to place this order?</p>
+                <div style="background: var(--glass); padding: 15px; border-radius: 12px; margin-top: 15px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>UID:</span>
+                        <span id="confirmUID">-</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Package:</span>
+                        <span id="confirmPackage">-</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-weight: 700; color: var(--primary);">
+                        <span>Total:</span>
+                        <span id="confirmTotal">Rs. 0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn cancel" onclick="closeModal('confirmModal')">Cancel</button>
+                <button class="modal-btn confirm" onclick="confirmOrder()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <script>
+        // App State
+        let state = {
+            user: null,
+            uid: '',
+            selectedPackage: null,
+            selectedPayment: null,
+            maniBalance: 0,
+            ezcashBalance: 0,
+            maniActivity: [],
+            ezcashActivity: [],
+            orders: [],
+            theme: 'dark',
+            language: 'en'
+        };
+
+        // Translations
+        const translations = {
+            en: {
+                welcome_subtitle: 'Choose your package & top-up instantly',
+                enter_uid: 'Enter Your UID',
+                packages: 'Available Packages',
+                payment_method: 'Payment Method',
+                place_order: 'Place Order'
+            },
+            si: {
+                welcome_subtitle: 'ඔබේ පැකේජය තෝරා ක්ෂණිකව top-up කරන්න',
+                enter_uid: 'ඔබේ UID ඇතුලත් කරන්න',
+                packages: 'ලබාගත හැකි පැකේජ',
+                payment_method: 'ගෙවීම් ක්‍රමය',
+                place_order: 'ඇණවුම කරන්න'
+            },
+            ta: {
+                welcome_subtitle: 'உங்கள் தொகுப்பைத் தேர்ந்தெடுத்து உடனடியாக top-up செய்யுங்கள்',
+                enter_uid: 'உங்கள் UID ஐ உள்ளிடவும்',
+                packages: 'கிடைக்கும் தொகுப்புகள்',
+                payment_method: 'கட்டண முறை',
+                place_order: 'ஆர்டர் செய்'
+            }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            createParticles();
+            if (state.user) {
+                showApp();
+            }
+        });
+
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Load state from localStorage
+        function loadState() {
+            const saved = localStorage.getItem('nadiyaState');
+            if (saved) {
+                state = { ...state, ...JSON.parse(saved) };
+                updateUI();
+            }
+        }
+
+        // Save state to localStorage
+        function saveState() {
+            localStorage.setItem('nadiyaState', JSON.stringify(state));
+        }
+
+        // Login
+        function login() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const mobile = document.getElementById('loginMobile').value.trim();
+
+            if (!username) {
+                showToast('Please enter username', 'error');
+                return;
+            }
+            if (!mobile) {
+                showToast('Please enter mobile number', 'error');
+                return;
+            }
+
+            state.user = {
+                username: username,
+                mobile: mobile,
+                joinedDate: new Date().toLocaleDateString()
+            };
+            saveState();
+            showApp();
+            showToast('Welcome to NADIYA! 🎮', 'success');
+        }
+
+        // Show App
+        function showApp() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('appContainer').style.display = 'block';
+            document.getElementById('welcomeUser').textContent = `Welcome, ${state.user.username}!`;
+            updateUI();
+        }
+
+        // Update UI
+        function updateUI() {
+            // Update balances
+            document.getElementById('maniBalance').textContent = `Rs. ${state.maniBalance.toLocaleString()}`;
+            document.getElementById('ezcashBalance').textContent = `Rs. ${state.ezcashBalance.toLocaleString()}`;
+            document.getElementById('maniPayBalance').textContent = state.maniBalance.toLocaleString();
+            document.getElementById('ezcashPayBalance').textContent = state.ezcashBalance.toLocaleString();
+            document.getElementById('maniDetailBalance').textContent = `Rs. ${state.maniBalance.toLocaleString()}`;
+            document.getElementById('ezcashDetailBalance').textContent = `Rs. ${state.ezcashBalance.toLocaleString()}`;
+
+            // Update account
+            if (state.user) {
+                document.getElementById('accountName').textContent = state.user.username;
+                document.getElementById('accountPhone').textContent = state.user.mobile;
+                document.getElementById('accountMani').textContent = `Rs. ${state.maniBalance.toLocaleString()}`;
+                document.getElementById('accountEzcash').textContent = `Rs. ${state.ezcashBalance.toLocaleString()}`;
+                document.getElementById('accountOrders').textContent = state.orders.length;
+                document.getElementById('accountJoined').textContent = state.user.joinedDate;
+            }
+
+            // Update theme
+            if (state.theme === 'light') {
+                document.body.classList.add('light-mode');
+                document.getElementById('themeIcon').className = 'fas fa-sun';
+            } else {
+                document.body.classList.remove('light-mode');
+                document.getElementById('themeIcon').className = 'fas fa-moon';
+            }
+
+            // Update language
+            applyLanguage();
+
+            // Update activities
+            updateActivityList('mani');
+            updateActivityList('ezcash');
+
+            // Update history
+            updateHistoryList();
+
+            // Update order button
+            updateOrderButton();
+        }
+
+        // Toggle Theme
+        function toggleTheme() {
+            state.theme = state.theme === 'dark' ? 'light' : 'dark';
+            saveState();
+            updateUI();
+        }
+
+        // Show Screen
+        function showScreen(screen) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+            switch(screen) {
+                case 'home':
+                    document.getElementById('homeScreen').classList.add('active');
+                    document.querySelectorAll('.nav-item')[0].classList.add('active');
+                    break;
+                case 'wallet':
+                    document.getElementById('walletScreen').classList.add('active');
+                    document.querySelectorAll('.nav-item')[1].classList.add('active');
+                    break;
+                case 'settings':
+                    document.getElementById('settingsScreen').classList.add('active');
+                    document.querySelectorAll('.nav-item')[2].classList.add('active');
+                    break;
+            }
+        }
+
+        // Show Settings Page
+        function showSettingsPage(page) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            
+            switch(page) {
+                case 'maniSettings':
+                    document.getElementById('walletScreen').classList.add('active');
+                    switchWalletTab('mani');
+                    break;
+                case 'ezcashSettings':
+                    document.getElementById('walletScreen').classList.add('active');
+                    switchWalletTab('ezcash');
+                    break;
+                case 'history':
+                    document.getElementById('historyScreen').classList.add('active');
+                    break;
+                case 'account':
+                    document.getElementById('accountScreen').classList.add('active');
+                    break;
+                case 'manual':
+                    document.getElementById('manualScreen').classList.add('active');
+                    break;
+            }
+        }
+
+        // Show Wallet Screen
+        function showWalletScreen(wallet) {
+            showScreen('wallet');
+            switchWalletTab(wallet);
+        }
+
+        // Switch Wallet Tab
+        function switchWalletTab(wallet) {
+            document.querySelectorAll('.wallet-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('maniWallet').style.display = 'none';
+            document.getElementById('ezcashWallet').style.display = 'none';
+
+            if (wallet === 'mani') {
+                document.querySelectorAll('.wallet-tab')[0].classList.add('active');
+                document.getElementById('maniWallet').style.display = 'block';
+            } else {
+                document.querySelectorAll('.wallet-tab')[1].classList.add('active');
+                document.getElementById('ezcashWallet').style.display = 'block';
+            }
+        }
+
+        // Validate UID
+        function validateUID() {
+            const uid = document.getElementById('uidInput').value;
+            state.uid = uid;
+            
+            if (uid.length > 0) {
+                document.getElementById('step1').classList.add('completed');
+                document.getElementById('step2').classList.add('active');
+            } else {
+                document.getElementById('step1').classList.remove('completed');
+                document.getElementById('step1').classList.add('active');
+                document.getElementById('step2').classList.remove('active');
+            }
+            
+            updateOrderButton();
+        }
+
+        // Verify UID
+        function verifyUID() {
+            const uid = document.getElementById('uidInput').value;
+            if (uid.length < 6) {
+                showToast('Please enter a valid UID', 'error');
+                return;
+            }
+            showToast('UID Verified! ✓', 'success');
+            state.uid = uid;
+            document.getElementById('step1').classList.add('completed');
+            document.getElementById('step2').classList.add('active');
+            saveState();
+            updateOrderButton();
+        }
+
+        // Show Package Category
+        function showPackageCategory(category) {
+            document.querySelectorAll('.package-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.getElementById('diamondsPackages').style.display = 'none';
+            document.getElementById('membershipPackages').style.display = 'none';
+            document.getElementById('levelupPackages').style.display = 'none';
+            document.getElementById('evoPackages').style.display = 'none';
+
+            document.getElementById(category + 'Packages').style.display = 'grid';
+        }
+
+        // Select Package
+        function selectPackage(element, name, price) {
+            document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            state.selectedPackage = { name, price };
+            
+            document.getElementById('step2').classList.add('completed');
+            document.getElementById('step3').classList.add('active');
+            
+            updateOrderSummary();
+            updateOrderButton();
+        }
+
+        // Select Payment
+        function selectPayment(element, method) {
+            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            state.selectedPayment = method;
+            
+            updateOrderSummary();
+            updateOrderButton();
+        }
+
+        // Update Order Summary
+        function updateOrderSummary() {
+            const summary = document.getElementById('orderSummary');
+            
+            if (state.uid && state.selectedPackage && state.selectedPayment) {
+                summary.classList.add('show');
+                document.getElementById('summaryUID').textContent = state.uid;
+                document.getElementById('summaryPackage').textContent = state.selectedPackage.name;
+                document.getElementById('summaryPayment').textContent = 
+                    state.selectedPayment === 'mani' ? 'Mani Account' :
+                    state.selectedPayment === 'ezcash' ? 'EZ Cash' : 'WhatsApp';
+                document.getElementById('summaryTotal').textContent = `Rs. ${state.selectedPackage.price.toLocaleString()}`;
+            } else {
+                summary.classList.remove('show');
+            }
+        }
+
+        // Update Order Button
+        function updateOrderButton() {
+            const btn = document.getElementById('orderBtn');
+            btn.disabled = !(state.uid && state.selectedPackage && state.selectedPayment);
+        }
+
+        // Process Order
+        function processOrder() {
+            if (!state.uid || !state.selectedPackage || !state.selectedPayment) {
+                showToast('Please complete all steps', 'error');
+                return;
+            }
+
+            // Check balance for wallet payments
+            if (state.selectedPayment === 'mani' && state.maniBalance < state.selectedPackage.price) {
+                showToast('Insufficient Mani balance', 'error');
+                return;
+            }
+            if (state.selectedPayment === 'ezcash' && state.ezcashBalance < state.selectedPackage.price) {
+                showToast('Insufficient EZ Cash balance', 'error');
+                return;
+            }
+
+            // Show confirmation modal
+            document.getElementById('confirmUID').textContent = state.uid;
+            document.getElementById('confirmPackage').textContent = state.selectedPackage.name;
+            document.getElementById('confirmTotal').textContent = `Rs. ${state.selectedPackage.price.toLocaleString()}`;
+            document.getElementById('confirmModal').classList.add('show');
+        }
+
+        // Confirm Order
+        function confirmOrder() {
+            closeModal('confirmModal');
+
+            if (state.selectedPayment === 'whatsapp') {
+                // Send WhatsApp message
+                const message = encodeURIComponent(
+                    `🎮 *NADIYA Top-Up Order*\n\n` +
+                    `📱 UID: ${state.uid}\n` +
+                    `📦 Package: ${state.selectedPackage.name}\n` +
+                    `💰 Amount: Rs. ${state.selectedPackage.price.toLocaleString()}\n` +
+                    `👤 Customer: ${state.user.username}\n` +
+                    `📞 Mobile: ${state.user.mobile}\n\n` +
+                    `⏰ Order Time: ${new Date().toLocaleString()}`
+                );
+                window.open(`https://wa.me/94767761633?text=${message}`, '_blank');
+            } else {
+                // Deduct from wallet
+                if (state.selectedPayment === 'mani') {
+                    state.maniBalance -= state.selectedPackage.price;
+                    state.maniActivity.unshift({
+                        type: 'debit',
+                        description: state.selectedPackage.name,
+                        amount: state.selectedPackage.price,
+                        date: new Date().toLocaleString()
+                    });
+                } else {
+                    state.ezcashBalance -= state.selectedPackage.price;
+                    state.ezcashActivity.unshift({
+                        type: 'debit',
+                        description: state.selectedPackage.name,
+                        amount: state.selectedPackage.price,
+                        date: new Date().toLocaleString()
+                    });
+                }
+            }
+
+            // Add to orders
+            state.orders.unshift({
+                uid: state.uid,
+                package: state.selectedPackage.name,
+                price: state.selectedPackage.price,
+                payment: state.selectedPayment,
+                date: new Date().toLocaleString(),
+                status: 'pending'
+            });
+
+            saveState();
+            updateUI();
+
+            // Reset selection
+            state.selectedPackage = null;
+            state.selectedPayment = null;
+            document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
+            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+            document.getElementById('orderSummary').classList.remove('show');
+            updateOrderButton();
+
+            showToast('Order placed successfully! 🎉', 'success');
+
+            // Send WhatsApp confirmation for wallet orders
+            if (state.selectedPayment !== 'whatsapp') {
+                setTimeout(() => {
+                    const message = encodeURIComponent(
+                        `🎮 *NADIYA Top-Up Order*\n\n` +
+                        `📱 UID: ${state.uid}\n` +
+                        `📦 Package: ${state.orders[0].package}\n` +
+                        `💰 Amount: Rs. ${state.orders[0].price.toLocaleString()}\n` +
+                        `💳 Payment: ${state.orders[0].payment === 'mani' ? 'Mani Account' : 'EZ Cash'}\n` +
+                        `👤 Customer: ${state.user.username}\n` +
+                        `📞 Mobile: ${state.user.mobile}\n\n` +
+                        `⏰ Order Time: ${state.orders[0].date}`
+                    );
+                    window.open(`https://wa.me/94767761633?text=${message}`, '_blank');
+                }, 1000);
+            }
+        }
+
+        // Add Cash
+        function addCash(wallet) {
+            const refInput = document.getElementById(wallet + 'RefInput');
+            const amountInput = document.getElementById(wallet + 'AmountInput');
+            
+            const ref = refInput.value.trim();
+            const amount = parseInt(amountInput.value);
+
+            const validRef = wallet === 'mani' ? 'NADIYA2026884968' : 'NADIYA202688499';
+
+            if (ref !== validRef) {
+                showToast('Invalid reference number', 'error');
+                return;
+            }
+            if (!amount || amount <= 0) {
+                showToast('Please enter a valid amount', 'error');
+                return;
+            }
+
+            if (wallet === 'mani') {
+                state.maniBalance += amount;
+                state.maniActivity.unshift({
+                    type: 'credit',
+                    description: 'Cash Added',
+                    amount: amount,
+                    date: new Date().toLocaleString()
+                });
+            } else {
+                state.ezcashBalance += amount;
+                state.ezcashActivity.unshift({
+                    type: 'credit',
+                    description: 'Cash Added',
+                    amount: amount,
+                    date: new Date().toLocaleString()
+                });
+            }
+
+            saveState();
+            updateUI();
+
+            refInput.value = '';
+            amountInput.value = '';
+
+            showToast(`Rs. ${amount.toLocaleString()} added successfully!`, 'success');
+        }
+
+        // Update Activity List
+        function updateActivityList(wallet) {
+            const list = document.getElementById(wallet + 'Activity');
+            const activities = wallet === 'mani' ? state.maniActivity : state.ezcashActivity;
+
+            if (activities.length === 0) {
+                list.innerHTML = `
+                    <div class="no-activity">
+                        <i class="fas fa-history" style="font-size: 40px; color: #555; margin-bottom: 10px;"></i>
+                        <p>No activity yet</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = activities.map(a => `
+                <div class="activity-item">
+                    <div class="activity-icon ${a.type}">
+                        <i class="fas fa-${a.type === 'credit' ? 'arrow-down' : 'arrow-up'}"></i>
+                    </div>
+                    <div class="activity-info">
+                        <div class="activity-type">${a.description}</div>
+                        <div class="activity-date">${a.date}</div>
+                    </div>
+                    <div class="activity-amount ${a.type}">
+                        ${a.type === 'credit' ? '+' : '-'}Rs. ${a.amount.toLocaleString()}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update History List
+        function updateHistoryList() {
+            const list = document.getElementById('historyList');
+
+            if (state.orders.length === 0) {
+                list.innerHTML = `
+                    <div class="no-activity" style="padding: 50px 20px;">
+                        <i class="fas fa-shopping-bag" style="font-size: 50px; color: #555; margin-bottom: 15px;"></i>
+                        <p>No orders yet</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = state.orders.map(o => `
+                <div class="history-item">
+                    <div class="history-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <div class="history-info">
+                        <div class="history-title">${o.package}</div>
+                        <div class="history-uid">UID: ${o.uid}</div>
+                    </div>
+                    <div class="history-right">
+                        <div class="history-amount">Rs. ${o.price.toLocaleString()}</div>
+                        <div class="history-date">${o.date}</div>
+                        <span class="history-status ${o.status}">${o.status}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Copy Reference
+        function copyRef(ref) {
+            navigator.clipboard.writeText(ref);
+            showToast('Reference copied!', 'success');
+        }
+
+        // Show Language Modal
+        function showLanguageModal() {
+            document.getElementById('languageModal').classList.add('show');
+        }
+
+        // Set Language
+        function setLanguage(lang) {
+            state.language = lang;
+            saveState();
+            applyLanguage();
+            closeModal('languageModal');
+            
+            const langNames = { en: 'English', si: 'සිංහල', ta: 'தமிழ்' };
+            document.getElementById('currentLang').textContent = langNames[lang];
+            showToast('Language changed!', 'success');
+        }
+
+        // Apply Language
+        function applyLanguage() {
+            const trans = translations[state.language] || translations.en;
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (trans[key]) {
+                    el.textContent = trans[key];
+                }
+            });
+        }
+
+        // Close Modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('show');
+        }
+
+        // Show Toast
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toast.className = `toast ${type}`;
+            toastMessage.textContent = message;
+            toast.querySelector('i').className = `fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}`;
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                state.user = null;
+                saveState();
+                document.getElementById('appContainer').style.display = 'none';
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('loginUsername').value = '';
+                document.getElementById('loginMobile').value = '';
+            }
+        }
+
+        // Close modals on outside click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
